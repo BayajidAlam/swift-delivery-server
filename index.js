@@ -56,12 +56,44 @@ async function run(){
         res.send(result)
     })
 
-    // get review from database and send to client 
-    app.get('/')
+    // // get review from database and send to client 
+    // app.get('/reviews',async (req,res) => {
+    //   console.log(req.query.name)
+    //   let query = {};
+    //   if(req.query.name){
+    //     query = {
+    //       serviceName : req.query.name
+    //     }
+    //   }
+    //   const cursor = reviewCollection.find(query);
+    //   const reviews = await cursor.toArray()
+      
+    //   res.send(reviews)
+    // })
 
+ 
 
+    // get a specific user data from database and send to client 
+    app.get('/reviews', async (req,res)=> {
+      let query = {}
+      console.log(req.query.email)
+      if(req.query.email){
+        query = {          
+          reviewerEmail : req.query.email
+        }
+      }
+      const cursor = reviewCollection.find(query)
+      const reviews = await cursor.toArray()
+      res.send(reviews)
+    })
 
-
+    // delete specific item 
+    app.delete('/reviews/:id',async(req,res)=>{
+          const id = req.params.id
+          const query = { _id: ObjectId(id)}
+          const result = await reviewCollection.deleteOne(query)
+          res.send(result)
+        })
 
   //--------------------------------------------//
   }
