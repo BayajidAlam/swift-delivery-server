@@ -56,27 +56,23 @@ async function run(){
         res.send(result)
     })
 
-    // // get review from database and send to client 
-    // app.get('/reviews',async (req,res) => {
-    //   console.log(req.query.name)
-    //   let query = {};
-    //   if(req.query.name){
-    //     query = {
-    //       serviceName : req.query.name
-    //     }
-    //   }
-    //   const cursor = reviewCollection.find(query);
-    //   const reviews = await cursor.toArray()
-      
-    //   res.send(reviews)
-    // })
+    // // get name specific review from database and send to client 
 
- 
+    app.get('/reviews',async(req,res)=>{
+      let query = {}
+      if(req.query.name){
+        query = {
+          serviceName : req.query.name
+        }
+      }
+      const cursor = reviewCollection.find(query)
+      const reviews = await cursor.toArray()
+      res.send(reviews)
+    })
 
-    // get a specific user data from database and send to client 
+    // get a user specific user data from database and send to client 
     app.get('/reviews', async (req,res)=> {
       let query = {}
-      console.log(req.query.email)
       if(req.query.email){
         query = {          
           reviewerEmail : req.query.email
