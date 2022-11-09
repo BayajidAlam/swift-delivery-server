@@ -18,6 +18,9 @@ async function run(){
   try{
 
     const serviceCollection = client.db('swiftDelivery').collection('services')
+    const reviewCollection = client.db('swiftDelivery').collection('reviews')
+    //-------------------------------------//
+
     // get data of all services 
     app.get('/services',async(req,res)=>{
       const query = {}
@@ -25,6 +28,7 @@ async function run(){
       const result = await cursor.toArray()
       res.send(result)
     })
+
     // get data of 3 services for home 
     app.get('/servicesOfHome',async(req,res)=>{
       const query = {}
@@ -32,6 +36,7 @@ async function run(){
       const result = await cursor.limit(3).toArray()
       res.send(result)
     })
+
     // get a specific data of service 
     app.get('/services/:id',async(req,res)=>{
       const id = req.params.id 
@@ -39,6 +44,26 @@ async function run(){
       const serivice = await serviceCollection.findOne(query)
       res.send(serivice) 
     })
+  //----------------------------------------//
+
+  //------------------------------------------//
+    // review colletion api 
+
+    // get review from client and send to database 
+    app.post('/reviews',async(req,res)=>{
+        const review = req.body
+        const result = await reviewCollection.insertOne(review)
+        res.send(result)
+    })
+
+    // get review from database and send to client 
+    app.get('/')
+
+
+
+
+
+  //--------------------------------------------//
   }
   finally{
     
