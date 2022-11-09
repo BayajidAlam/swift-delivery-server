@@ -106,6 +106,22 @@ async function run(){
       const result = await reviewCollection.findOne(query)
       res.send(result) 
     })
+
+    // update a user name and review 
+    app.put('/update/:id',async(req,res)=>{
+      const id = req.params.id 
+      const filter = { _id:ObjectId(id)}
+      const user = req.body
+      const option = { upsert: true};
+      const updateUserReview = { 
+        $set:{
+          reviewerName : user.newName,
+          review : user.newReview
+        }
+      }
+      const result = await reviewCollection.updateOne(filter,updateUserReview,option)
+      res.send(result)
+    })
   }
   finally{
     
