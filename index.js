@@ -49,7 +49,7 @@ async function run(){
         res.send({token})
       })
 
-
+   
     //---------------------------------------//
 
 
@@ -66,7 +66,6 @@ async function run(){
     // add services to database 
     app.post('/services',async (req,res)=> {
       const service = req.body 
-      console.log(service)
       const result = await serviceCollection.insertOne(service)
       res.send(result)
     })
