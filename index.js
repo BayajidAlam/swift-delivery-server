@@ -49,19 +49,17 @@ async function run(){
         res.send({token})
       })
 
-   
+
     //---------------------------------------//
 
 
     //-------------------------------------//
-    
+
     // get data of all services 
     app.get('/services',async(req,res)=>{
       const query = {}
-      const cursor = serviceCollection.find().sort({date: 1})
-      
+      const cursor = serviceCollection.find(query)
       const result = await cursor.toArray()
-     
       res.send(result)
     })
 
@@ -75,10 +73,9 @@ async function run(){
     // get data of 3 services for home 
     app.get('/servicesOfHome',async(req,res)=>{
       const query = {}
-      const cursor = serviceCollection.find().sort({date: 1})
+      const cursor = serviceCollection.find(query)
       const result = await cursor.limit(3).toArray()
       res.send(result)
-      console.log(result)
     })
 
     // get a specific data of service 
